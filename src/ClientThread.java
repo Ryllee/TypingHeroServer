@@ -1,14 +1,11 @@
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientThread extends Thread {
 
     private Socket socket;
     private static final int FILE_SIZE = 10000;
-    private String FILE_TO_RECEIVE = "test.txt";
+    private String FILE_TO_RECEIVE;
 
     public ClientThread(Socket socket){
        this.socket = socket;
@@ -18,6 +15,9 @@ public class ClientThread extends Thread {
         System.out.println("New connection now working.");
         try
         {
+            DataInputStream receiveFileName = new DataInputStream(socket.getInputStream());
+            FILE_TO_RECEIVE = (String) receiveFileName.readUTF();
+
             byte[] fileSize = new byte[FILE_SIZE];
             InputStream input = socket.getInputStream();
             FileOutputStream fileOut = new FileOutputStream(FILE_TO_RECEIVE);
