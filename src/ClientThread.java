@@ -13,6 +13,18 @@ public class ClientThread extends Thread {
     @Override
     public void run() {
         System.out.println("New connection now working.");
+        DataInputStream commandInput = new DataInputStream(socket.getInputStream());
+        String command = commandInput.readUTF();
+        if(command.equals("SAVE")) {
+            receiveSaveFile();
+        } else if(command.equals("LOAD")) {
+            
+        }
+
+
+    }
+
+    public void receiveSaveFile() {
         try
         {
             DataInputStream receiveFileName = new DataInputStream(socket.getInputStream());
