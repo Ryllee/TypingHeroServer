@@ -26,7 +26,7 @@ public class HighscoreHandler {
         saveFileNames = usernamehandler.readUsernames();
         for( String name : saveFileNames){
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(name));
+                BufferedReader reader = new BufferedReader(new FileReader(name+ ".txt"));
                 String points  = reader.readLine();
                 String totalpoints = reader.readLine();
                 resultList.add(new HighscoreData(name,Float.valueOf(points),Float.valueOf(totalpoints)));
