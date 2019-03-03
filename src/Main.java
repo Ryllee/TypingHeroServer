@@ -7,6 +7,8 @@ public class Main {
     public static void main(String[] args){
         ServerSocket serversocket;
         Socket socket;
+        UsernameHandler usernamehandler = new UsernameHandler();
+        HighscoreHandler highscorehandler = new HighscoreHandler(usernamehandler);
         try {
            serversocket = new ServerSocket(9999);
            System.out.println("Server now running, waiting for connections.");
@@ -14,7 +16,7 @@ public class Main {
             while(true){
                 socket = serversocket.accept();
                 System.out.println("New connection found.");
-                ClientThread clientthread = new ClientThread(socket);
+                ClientThread clientthread = new ClientThread(socket,highscorehandler);
                 clientthread.run();
             }
         }catch (Exception e){

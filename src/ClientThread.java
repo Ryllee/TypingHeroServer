@@ -5,9 +5,11 @@ public class ClientThread extends Thread {
 
     private Socket socket;
     private static final int FILE_SIZE = 10000;
+    private HighscoreHandler highscorehandler;
 
-    public ClientThread(Socket socket){
+    public ClientThread(Socket socket, HighscoreHandler highscorehandler){
        this.socket = socket;
+       this.highscorehandler = highscorehandler;
     }
     @Override
     public void run() {
@@ -69,6 +71,7 @@ public class ClientThread extends Thread {
             DataOutputStream response = new DataOutputStream(socket.getOutputStream());
             response.writeUTF("Server has downloaded file");
             response.flush();
+            highscorehandler.createHighscore();
         }
         catch (Exception e)
         {

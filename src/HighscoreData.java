@@ -1,12 +1,14 @@
 public class HighscoreData {
     public String username;
-    public String points;
-    public String totalPoints;
+    public float points;
+    public float totalPoints;
 
-    public HighscoreData(String username,String points,String totalPoints){
+    public HighscoreData(String username,float points,float totalPoints){
         this.username = username;
         this.points = points;
         this.totalPoints = totalPoints;
     }
+
+    public float getTotalPoints(){return totalPoints;}
 }
 
