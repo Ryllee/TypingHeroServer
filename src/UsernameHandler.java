@@ -10,7 +10,8 @@ public class UsernameHandler {
 
     public UsernameHandler(){
         try {
-            users = new File("FileNames.txt");
+            String url = System.getProperty("user.dir");
+            users = new File(url+"/saveFiles/FileNames.txt");
         }catch (Exception e) {
             System.out.println(e);
         }
@@ -18,7 +19,7 @@ public class UsernameHandler {
 
     public boolean writeUsernane(String username){
         ArrayList<String> usernameList = readUsernames();
-        for(int i = 0; i < usernameList.size()-1; i++){
+        for(int i = 0; i < usernameList.size(); i++){
             if(username.equals(usernameList.get(i))){
                 return false;
             }

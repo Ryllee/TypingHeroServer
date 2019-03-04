@@ -15,7 +15,9 @@ public class HighscoreHandler {
     public HighscoreHandler(UsernameHandler usernamehandler){
         this.usernamehandler = usernamehandler;
         try {
-            highscoreFile = new File("Highscore.txt");
+            String url = System.getProperty("user.dir");
+
+            highscoreFile = new File(url+"/saveFiles/Highscore.txt");
         }catch (Exception e) {
             System.out.println(e);
         }
@@ -26,7 +28,9 @@ public class HighscoreHandler {
         saveFileNames = usernamehandler.readUsernames();
         for( String name : saveFileNames){
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(name+ ".txt"));
+                String url = System.getProperty("user.dir");
+                File file = new File(url+"/saveFiles/"+ name);
+                BufferedReader reader = new BufferedReader(new FileReader(file));
                 String points  = reader.readLine();
                 String totalpoints = reader.readLine();
                 resultList.add(new HighscoreData(name,Float.valueOf(points),Float.valueOf(totalpoints)));
@@ -38,14 +42,21 @@ public class HighscoreHandler {
     }
 
     private ArrayList<HighscoreData> sortHighscoreData(ArrayList<HighscoreData> highscoreList){
-        highscoreList.sort(Comparator.comparing(HighscoreData::getTotalPoints));
+        highscoreList.sort(Comparator.comparing(HighscoreData::getTotalPoints).reversed());
         return highscoreList;
     }
 
     private void writeHighscoreFile(ArrayList<HighscoreData> highscoreList){
         try{
             FileWriter writer = new FileWriter(highscoreFile);
-            for(int index = 0;index < 5; index++){
+            int maxindex;
+            if(highscoreList.size()<5){
+                maxindex = highscoreList.size();
+            }else{
+                maxindex = 5;
+            }
+            for(int index = 0;index < maxindex ; index++){
+
                 writer.write(index+1 +": " + highscoreList.get(index).username + " " + highscoreList.get(index).points + " " + highscoreList.get(index).totalPoints + "\n");
             }
             writer.close();
@@ -54,7 +65,8 @@ public class HighscoreHandler {
         }
     }
 
-    public void createHighscore(){
+    public void createHighscore(String username){
+        usernamehandler.writeUsernane(username);
         ArrayList<HighscoreData> highscoreList = sortHighscoreData(extractHighscoreData());
         writeHighscoreFile(highscoreList);
     }

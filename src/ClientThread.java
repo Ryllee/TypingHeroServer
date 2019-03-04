@@ -33,7 +33,8 @@ public class ClientThread extends Thread {
         try {
             DataInputStream receiveFileName = new DataInputStream(socket.getInputStream());
             String FILE_TO_SEND = (String) receiveFileName.readUTF();
-            File savefile = new File(FILE_TO_SEND + ".txt");
+            String url = System.getProperty("user.dir");
+            File savefile = new File(url+"/saveFiles/"+ FILE_TO_SEND + ".txt");
             byte[] fileSize = new byte[(int) savefile.length()];
             FileInputStream fileIn = new FileInputStream(savefile);
             BufferedInputStream fileBIn = new BufferedInputStream(fileIn);
@@ -57,9 +58,11 @@ public class ClientThread extends Thread {
             DataInputStream receiveFileName = new DataInputStream(socket.getInputStream());
             String FILE_TO_RECEIVE = (String) receiveFileName.readUTF();
 
+            String url = System.getProperty("user.dir");
+            File file = new File(url+"/saveFiles/"+ FILE_TO_RECEIVE);
             byte[] fileSize = new byte[FILE_SIZE];
             InputStream input = socket.getInputStream();
-            FileOutputStream fileOut = new FileOutputStream(FILE_TO_RECEIVE);
+            FileOutputStream fileOut = new FileOutputStream(file);
             BufferedOutputStream fileBOut = new BufferedOutputStream(fileOut);
             int bytesread = input.read(fileSize, 0, fileSize.length);
             fileBOut.write(fileSize,0,bytesread);
@@ -71,7 +74,7 @@ public class ClientThread extends Thread {
             DataOutputStream response = new DataOutputStream(socket.getOutputStream());
             response.writeUTF("Server has downloaded file");
             response.flush();
-            highscorehandler.createHighscore();
+            highscorehandler.createHighscore(FILE_TO_RECEIVE);
         }
         catch (Exception e)
         {
