@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientThread extends Thread {
 
@@ -21,6 +22,8 @@ public class ClientThread extends Thread {
                 receiveSaveFile();
             } else if (command.equals("LOAD")) {
                 sendSaveFile();
+            } else if (command.equals("HIGHSCORE")){
+                sendHighscore();
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -78,6 +81,26 @@ public class ClientThread extends Thread {
         }
         catch (Exception e)
         {
+            System.out.println(e);
+        }
+    }
+    public void sendHighscore(){
+        ArrayList<HighscoreData> highscoreList = highscorehandler.sortHighscoreData(highscorehandler.extractHighscoreData());
+        try{
+            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+
+            int maxindex;
+            if(highscoreList.size()<5){
+                maxindex = highscoreList.size();
+            }else{
+                maxindex = 5;
+            }
+            output.writeUTF(Integer.toString(maxindex));
+            for(int i = 0; i <maxindex; i++){
+                output.writeUTF(highscoreList.get(i).username);
+                output.writeUTF(Float.toString(highscoreList.get(i).totalPoints));
+            }
+        }catch (Exception e){
             System.out.println(e);
         }
     }

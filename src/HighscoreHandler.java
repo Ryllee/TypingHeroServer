@@ -21,7 +21,7 @@ public class HighscoreHandler {
         }
     }
 
-    private ArrayList<HighscoreData> extractHighscoreData(){
+    public ArrayList<HighscoreData> extractHighscoreData(){
         ArrayList<HighscoreData> resultList = new ArrayList<>();
         saveFileNames = usernamehandler.readUsernames();
         for( String name : saveFileNames){
@@ -39,7 +39,7 @@ public class HighscoreHandler {
         return resultList;
     }
 
-    private ArrayList<HighscoreData> sortHighscoreData(ArrayList<HighscoreData> highscoreList){
+    public ArrayList<HighscoreData> sortHighscoreData(ArrayList<HighscoreData> highscoreList){
         highscoreList.sort(Comparator.comparing(HighscoreData::getTotalPoints).reversed());
         return highscoreList;
     }

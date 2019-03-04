@@ -1,5 +1,0 @@
-t1.txt
-ts2.txt
-ts3.txt
-ts4.txt
-ts5.txt
