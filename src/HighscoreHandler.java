@@ -15,9 +15,7 @@ public class HighscoreHandler {
     public HighscoreHandler(UsernameHandler usernamehandler){
         this.usernamehandler = usernamehandler;
         try {
-            String url = System.getProperty("user.dir");
-
-            highscoreFile = new File(url+"/saveFiles/Highscore.txt");
+            highscoreFile = new File("Highscore.txt");
         }catch (Exception e) {
             System.out.println(e);
         }

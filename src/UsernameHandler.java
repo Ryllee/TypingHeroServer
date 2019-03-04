@@ -10,8 +10,7 @@ public class UsernameHandler {
 
     public UsernameHandler(){
         try {
-            String url = System.getProperty("user.dir");
-            users = new File(url+"/saveFiles/FileNames.txt");
+            users = new File("FileNames.txt");
         }catch (Exception e) {
             System.out.println(e);
         }
