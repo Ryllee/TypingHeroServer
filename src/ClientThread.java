@@ -7,11 +7,13 @@ public class ClientThread extends Thread {
     private Socket socket;
     private static final int FILE_SIZE = 10000;
     private HighscoreHandler highscorehandler;
+    private UsernameHandler usernamehandler;
 
     public ClientThread(Socket socket, HighscoreHandler highscorehandler){
        this.socket = socket;
        this.highscorehandler = highscorehandler;
     }
+
     @Override
     public void run() {
         System.out.println("New connection now working.");
@@ -33,24 +35,42 @@ public class ClientThread extends Thread {
     }
 
     public void sendSaveFile() {
+        boolean fileExist = false;
         try {
             DataInputStream receiveFileName = new DataInputStream(socket.getInputStream());
-            String FILE_TO_SEND = (String) receiveFileName.readUTF();
-            String url = System.getProperty("user.dir");
-            File savefile = new File(url+"/saveFiles/"+ FILE_TO_SEND + ".txt");
-            byte[] fileSize = new byte[(int) savefile.length()];
-            FileInputStream fileIn = new FileInputStream(savefile);
-            BufferedInputStream fileBIn = new BufferedInputStream(fileIn);
-            fileBIn.read(fileSize, 0, fileSize.length);
-            OutputStream output = socket.getOutputStream();
-            System.out.println("Sending file(" + fileSize.length + " bytes)");
-            output.write(fileSize, 0, fileSize.length);
-            output.flush();
-            fileBIn.close();
-            fileIn.close();
-            System.out.println("File" + FILE_TO_SEND + ".txt sent");
+            ArrayList<String> usernames = usernamehandler.readUsernames();
+            DataOutputStream write = new DataOutputStream(socket.getOutputStream());
+            for(String us : usernames){
+                if(us.equals(receiveFileName)){
+                    write.writeUTF("TRUE");
+                    write.flush();
+                    fileExist = true;
+                    break;
+                }
+                fileExist = false;
+            }
+            if(fileExist == true) {
+                String FILE_TO_SEND = (String) receiveFileName.readUTF();
+                String url = System.getProperty("user.dir");
+                File savefile = new File(url + "/saveFiles/" + FILE_TO_SEND + ".txt");
+                byte[] fileSize = new byte[(int) savefile.length()];
+                FileInputStream fileIn = new FileInputStream(savefile);
+                BufferedInputStream fileBIn = new BufferedInputStream(fileIn);
+                fileBIn.read(fileSize, 0, fileSize.length);
+                OutputStream output = socket.getOutputStream();
+                System.out.println("Sending file(" + fileSize.length + " bytes)");
+                output.write(fileSize, 0, fileSize.length);
+                output.flush();
+                fileBIn.close();
+                fileIn.close();
+                System.out.println("File" + FILE_TO_SEND + ".txt sent");
+            }
+            else{
+                write.writeUTF("FALSE");
+                write.flush();
+            }
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 
