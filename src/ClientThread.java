@@ -8,10 +8,19 @@ public class ClientThread extends Thread {
     private static final int FILE_SIZE = 10000;
     private HighscoreHandler highscorehandler;
 
+    /**
+     * Skapar en ny ClientThread
+     * @param socket vilken socket den ska kommunicera på
+     * @param highscorehandler vilken highscorehandler den ska känna till
+     */
     public ClientThread(Socket socket, HighscoreHandler highscorehandler){
        this.socket = socket;
        this.highscorehandler = highscorehandler;
     }
+
+    /**
+     * Vad ClientThread ska göra
+     */
     @Override
     public void run() {
         System.out.println("New connection now working.");
@@ -32,6 +41,9 @@ public class ClientThread extends Thread {
 
     }
 
+    /**
+     * Skickar en sparfil från server till en client
+     */
     public void sendSaveFile() {
         try {
             DataInputStream receiveFileName = new DataInputStream(socket.getInputStream());
@@ -54,6 +66,9 @@ public class ClientThread extends Thread {
         }
     }
 
+    /**
+     * Tar emot en sparfil från client och sparar den på server
+     */
     public void receiveSaveFile() {
         try
         {
@@ -84,6 +99,10 @@ public class ClientThread extends Thread {
             System.out.println(e);
         }
     }
+
+    /**
+     * Skickar ett Highscore till en client
+     */
     public void sendHighscore(){
         ArrayList<HighscoreData> highscoreList = highscorehandler.sortHighscoreData(highscorehandler.extractHighscoreData());
         try{

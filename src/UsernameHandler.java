@@ -8,6 +8,9 @@ public class UsernameHandler {
 
     private File users;
 
+    /**
+     * Skapar en UsernameHandler
+     */
     public UsernameHandler(){
         try {
             users = new File("FileNames.txt");
@@ -16,6 +19,11 @@ public class UsernameHandler {
         }
     }
 
+    /**
+     * Skriver ett username i filen om det inte redan finns
+     * @param username vilket username som ska skrivas
+     * @return om den kunde skriva usernamet eller ej
+     */
     public boolean writeUsernane(String username){
         ArrayList<String> usernameList = readUsernames();
         for(int i = 0; i < usernameList.size(); i++){
@@ -34,6 +42,10 @@ public class UsernameHandler {
         return false;
     }
 
+    /**
+     * Läser in alla username från filen
+     * @return en lista av alla username
+     */
     public ArrayList<String> readUsernames(){
         String line = null;
         ArrayList<String> result = new ArrayList<String>();

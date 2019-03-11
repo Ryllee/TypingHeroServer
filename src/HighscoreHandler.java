@@ -12,6 +12,10 @@ public class HighscoreHandler {
     private UsernameHandler usernamehandler;
     ArrayList<String> saveFileNames;
 
+    /**
+     * Skapar en HighScoreHandler
+     * @param usernamehandler vilken usernamehandler som den ska känna till
+     */
     public HighscoreHandler(UsernameHandler usernamehandler){
         this.usernamehandler = usernamehandler;
         try {
@@ -21,6 +25,10 @@ public class HighscoreHandler {
         }
     }
 
+    /**
+     * Hämtar HighscoreData från alla sparfiler
+     * @return en lista av HighscoreData
+     */
     public ArrayList<HighscoreData> extractHighscoreData(){
         ArrayList<HighscoreData> resultList = new ArrayList<>();
         saveFileNames = usernamehandler.readUsernames();
@@ -39,11 +47,20 @@ public class HighscoreHandler {
         return resultList;
     }
 
+    /**
+     * Sorterar en lista av HighscoreData efter totalPoints
+     * @param highscoreList vilken lista som ska sorteras
+     * @return en lista som har sorterats
+     */
     public ArrayList<HighscoreData> sortHighscoreData(ArrayList<HighscoreData> highscoreList){
         highscoreList.sort(Comparator.comparing(HighscoreData::getTotalPoints).reversed());
         return highscoreList;
     }
 
+    /**
+     * Skriver Highscoret(Top 5) i en fil på servern
+     * @param highscoreList vilken lista som ska skrivas i filen
+     */
     private void writeHighscoreFile(ArrayList<HighscoreData> highscoreList){
         try{
             FileWriter writer = new FileWriter(highscoreFile);
@@ -63,6 +80,10 @@ public class HighscoreHandler {
         }
     }
 
+    /**
+     * Skapar/uppdaterar highscore
+     * @param username spelarens username(namnet på spelarens sparfil)
+     */
     public void createHighscore(String username){
         usernamehandler.writeUsernane(username);
         ArrayList<HighscoreData> highscoreList = sortHighscoreData(extractHighscoreData());
