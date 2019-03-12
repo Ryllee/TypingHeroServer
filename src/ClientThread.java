@@ -9,9 +9,10 @@ public class ClientThread extends Thread {
     private HighscoreHandler highscorehandler;
     private UsernameHandler usernamehandler;
 
-    public ClientThread(Socket socket, HighscoreHandler highscorehandler){
+    public ClientThread(Socket socket, HighscoreHandler highscorehandler,UsernameHandler usernamehandler){
        this.socket = socket;
        this.highscorehandler = highscorehandler;
+       this.usernamehandler = usernamehandler;
     }
 
     @Override
@@ -38,10 +39,11 @@ public class ClientThread extends Thread {
         boolean fileExist = false;
         try {
             DataInputStream receiveFileName = new DataInputStream(socket.getInputStream());
+            String FILE_TO_SEND = (String) receiveFileName.readUTF();
             ArrayList<String> usernames = usernamehandler.readUsernames();
             DataOutputStream write = new DataOutputStream(socket.getOutputStream());
             for(String us : usernames){
-                if(us.equals(receiveFileName)){
+                if(us.equals(FILE_TO_SEND+".txt")){
                     write.writeUTF("TRUE");
                     write.flush();
                     fileExist = true;
@@ -50,7 +52,7 @@ public class ClientThread extends Thread {
                 fileExist = false;
             }
             if(fileExist == true) {
-                String FILE_TO_SEND = (String) receiveFileName.readUTF();
+
                 String url = System.getProperty("user.dir");
                 File savefile = new File(url + "/saveFiles/" + FILE_TO_SEND + ".txt");
                 byte[] fileSize = new byte[(int) savefile.length()];

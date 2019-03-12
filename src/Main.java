@@ -16,7 +16,7 @@ public class Main {
             while(true){
                 socket = serversocket.accept();
                 System.out.println("New connection found.");
-                ClientThread clientthread = new ClientThread(socket,highscorehandler);
+                ClientThread clientthread = new ClientThread(socket,highscorehandler,usernamehandler);
                 clientthread.run();
             }
         }catch (Exception e){
