@@ -9,12 +9,21 @@ public class ClientThread extends Thread {
     private HighscoreHandler highscorehandler;
     private UsernameHandler usernamehandler;
 
+    /**
+     * Skapar en ny ClientThread
+     * @param socket vilken socket den ska kommunicera på
+     * @param highscorehandler vilken highscorehandler den ska känna till
+     * @param usernamehandler vilken usernamehandler den ska känna till
+     */
     public ClientThread(Socket socket, HighscoreHandler highscorehandler,UsernameHandler usernamehandler){
        this.socket = socket;
        this.highscorehandler = highscorehandler;
        this.usernamehandler = usernamehandler;
     }
 
+    /**
+     * Vad ClientThread ska göra
+     */
     @Override
     public void run() {
         System.out.println("New connection now working.");
@@ -35,6 +44,9 @@ public class ClientThread extends Thread {
 
     }
 
+    /**
+     * Skickar en sparfil från server till en client
+     */
     public void sendSaveFile() {
         boolean fileExist = false;
         try {
@@ -76,6 +88,9 @@ public class ClientThread extends Thread {
         }
     }
 
+    /**
+     * Tar emot en sparfil från client och sparar den på server
+     */
     public void receiveSaveFile() {
         try
         {
@@ -106,6 +121,10 @@ public class ClientThread extends Thread {
             System.out.println(e);
         }
     }
+
+    /**
+     * Skickar ett Highscore till en client
+     */
     public void sendHighscore(){
         ArrayList<HighscoreData> highscoreList = highscorehandler.sortHighscoreData(highscorehandler.extractHighscoreData());
         try{

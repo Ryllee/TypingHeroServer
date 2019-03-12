@@ -3,7 +3,10 @@ import java.net.Socket;
 
 public class Main {
 
-
+    /**
+     * Gör det som ska ske vid program start
+     * @param args
+     */
     public static void main(String[] args){
         ServerSocket serversocket;
         Socket socket;
