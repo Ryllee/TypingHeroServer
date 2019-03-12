@@ -27,7 +27,7 @@ public class ClientThread extends Thread {
     }
 
     /**
-     * Vad ClientThread ska göra
+     * Vad ClientThread ska göra när den startas
      */
     @Override
     public void run() {
