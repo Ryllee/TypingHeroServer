@@ -4,6 +4,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+/**
+ * Hanterar Usernames/filenames på server
+ *
+ * @author Eric Rylander
+ * @version 2019-03-12
+ */
 public class UsernameHandler {
 
     private File users;

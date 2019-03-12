@@ -2,6 +2,11 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Skapar en ny tråd som har hand om en specifik anslutning
+ * @author Eric Rylander
+ * @version 2019-03-12
+ */
 public class ClientThread extends Thread {
 
     private Socket socket;

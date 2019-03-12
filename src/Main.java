@@ -1,6 +1,12 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Huvudtråd för server, lyssnar efter nya anslutningar
+ *
+ * @author Eric Rylander
+ * @version 2019-03-12
+ */
 public class Main {
 
     /**

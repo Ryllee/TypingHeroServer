@@ -1,3 +1,9 @@
+/**
+ * Inkapslingsklass för highscore som underlättar hantering
+ *
+ * @author Eric Rylander
+ * @version 2019-03-12
+ */
 public class HighscoreData {
     public String username;
     public float points;

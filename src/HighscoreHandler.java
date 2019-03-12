@@ -5,7 +5,12 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
+/**
+ * Haanterar allt angående highscore
+ *
+ * @author Eric Rylander
+ * @version 2019-03-12
+ */
 public class HighscoreHandler {
 
     private File highscoreFile;
